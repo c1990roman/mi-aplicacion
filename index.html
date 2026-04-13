@@ -1113,12 +1113,20 @@
                                 <div class="acc-body">
                                     <div style="display: flex; gap: 12px;">
                                         <div class="field" style="flex: 1;">
-                                            <label>Deuda Total</label>
-                                            <input type="text" value="$ 209.700" />
+                                            <label>Segmento</label>
+                                            <input type="text" value="Segmento A" />
+                                        </div>
+                                        <div class="field" style="flex: 1;">
+                                            <label>Legajo</label>
+                                            <input type="text" value="123456" />
                                         </div>
                                         <div class="field" style="flex: 1;">
                                             <label>Anticipo</label>
                                             <input type="text" value="$ 50.300" />
+                                        </div>
+                                        <div class="field" style="flex: 1;">
+                                            <label>% Máximo de Bonificación</label>
+                                            <input type="text" value="60 %" />
                                         </div>
                                         <div class="field" style="flex: 1;">
                                             <label>Fecha de Promesa</label>
@@ -1133,30 +1141,31 @@
                                             <input type="text" value="$ 15.100" />
                                         </div>
                                         <div class="field" style="flex: 1;">
-                                            <label>Total Acuerdo</label>
+                                            <label>Total a Refinanciar</label>
                                             <input type="text" value="$ 48.000" />
                                         </div>
                                     </div>
                                     <table style="table-layout: fixed; width: 100%;">
                                         <colgroup>
-                                            <col style="width: 16.66%" span="6">
+                                            <col style="width: 12.5%" span="8">
                                         </colgroup>
                                         <thead>
                                             <tr>
-                                                <th>Anticipo</th>
                                                 <th>Cantidad de Cuotas</th>
+                                                <th>Total S/ Mora</th>
+                                                <th>Total Mora</th>
+                                                <th>Total C/ Mora</th>
+                                                <th>Anticipo</th>
                                                 <th>Valor de Cuota</th>
-                                                <th>Detalle Refinanciación</th>
-                                                <th>Total Refinanciación</th>
+                                                <th>Total Cuotas</th>
                                                 <th></th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr><td>$ 50.300</td><td>2 cuotas</td><td>$ 20.000</td><td>Anticipo de $ 50.300 + 2 Cuotas de $ 20.000</td><td>$ 90.300</td><td><span class="badge badge-ok" style="cursor: pointer;">Refinanciación</span></td></tr>
-                                            <tr><td>$ 50.300</td><td>3 cuotas</td><td>$ 13.300</td><td>Anticipo de $ 50.300 + 3 Cuotas de $ 13.300</td><td>$ 92.300</td><td><span class="badge badge-ok" style="cursor: pointer;">Refinanciación</span></td></tr>
-                                            <tr><td>$ 50.300</td><td>4 cuotas</td><td>$ 10.000</td><td>Anticipo de $ 50.300 + 4 Cuotas de $ 10.000</td><td>$ 94.300</td><td><span class="badge badge-ok" style="cursor: pointer;">Refinanciación</span></td></tr>
-                                            <tr><td>$ 50.300</td><td>5 cuotas</td><td>$ 9.600</td><td>Anticipo de $ 50.300 + 5 Cuotas de $ 9.600</td><td>$ 96.300</td><td><span class="badge badge-ok" style="cursor: pointer;">Refinanciación</span></td></tr>
-                                            <tr><td>$ 50.300</td><td>6 cuotas</td><td>$ 8.300</td><td>Anticipo de $ 50.300 + 6 Cuotas de $ 8.300</td><td>$ 98.300</td><td><span class="badge badge-ok" style="cursor: pointer;">Refinanciación</span></td></tr>
+                                            <tr><td>3 Cuotas</td><td>$ 50.300</td><td>$ 13.300</td><td>$ 63.300</td><td>$ 3.300</td><td>$ 20.000</td><td>$ 60.000</td><td><span class="badge badge-ok" style="cursor: pointer;">Refinanciación</span></td></tr>
+                                            <tr><td>4 Cuotas</td><td>$ 50.300</td><td>$ 13.300</td><td>$ 63.300</td><td>$ 3.300</td><td>$ 15.000</td><td>$ 60.000</td><td><span class="badge badge-ok" style="cursor: pointer;">Refinanciación</span></td></tr>
+                                            <tr><td>5 Cuotas</td><td>$ 50.300</td><td>$ 13.300</td><td>$ 63.300</td><td>$ 3.300</td><td>$ 12.000</td><td>$ 60.000</td><td><span class="badge badge-ok" style="cursor: pointer;">Refinanciación</span></td></tr>
+                                            <tr><td>6 Cuotas</td><td>$ 50.300</td><td>$ 13.300</td><td>$ 63.300</td><td>$ 3.300</td><td>$ 10.000</td><td>$ 60.000</td><td><span class="badge badge-ok" style="cursor: pointer;">Refinanciación</span></td></tr>
                                         </tbody>
                                     </table>
                                 </div>
