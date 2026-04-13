@@ -1,1138 +1,1450 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>Onboarding</title>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600&display=swap">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
-        <style>
-            body {
-                font-family: 'Open Sans', sans-serif;
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Aban - Admin</title>
+
+    <style>
+
+        /* ─── Variables ─────────────────────────────────────────────── */
+
+        :root {
+            --panel-1:    #ffffff;
+            --panel-2:    #f8fbff;
+            --line:       #d9e2ec;
+            --text:       #1f2d3d;
+            --muted:      #6b7c93;
+            --primary-1:  #15405B;
+            --primary-2:  #39B8D5;
+            --ok:         #e8f7ee;
+            --warn:       #fff6df;
+            --shadow:     0 10px 30px rgba(21, 64, 91, .10);
+            --radius:     18px;
+        }
+
+        /* ─── Reset ─────────────────────────────────────────────────── */
+
+        * {
+            box-sizing: border-box;
+        }
+
+        /* ─── Base ──────────────────────────────────────────────────── */
+
+        body {
+            margin: 0;
+            background: linear-gradient(180deg, #eef4f9 0%, #f7f9fc 100%);
+            color: var(--text);
+            font-family: Segoe UI, sans-serif;
+        }
+
+        /* ─── Header ────────────────────────────────────────────────── */
+
+        .header {
+            padding: 4px 24px;
+            background: linear-gradient(135deg, var(--primary-1), #1d567a);
+            color: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 4px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, .25);
+            position: sticky;
+            top: 0;
+            height: 60px;
+            z-index: 20;
+        }
+
+        .header-brand {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .brand-badge {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, var(--primary-2), #7bd7eb);
+            display: grid;
+            place-items: center;
+            color: var(--primary-1);
+            font-weight: 600;
+            box-shadow: inset 0 0 0 2px rgba(255, 255, 255, .25);
+        }
+
+        .brand-name h1 {
+            margin: 0;
+            font-size: 16px;
+            font-weight: 600;
+            letter-spacing: .25px;
+        }
+
+        .header-button {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            justify-content: flex-end;
+        }
+
+        /* ─── Buttons ───────────────────────────────────────────────── */
+
+        .btn {
+            border: none;
+            min-width: 72px;
+            height: 36px;
+            display: grid;
+            place-items: center;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: var(--primary-2);
+            color: #083041;
+        }
+
+        .btn-soft {
+            background: rgba(255, 255, 255, .25);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, .25);
+        }
+
+        .btn-block {
+            flex: 1;
+        }
+
+        /* ─── Main layout ───────────────────────────────────────────── */
+
+        .main {
+            padding: 32px;
+            background: var(--panel-1);
+            min-height: calc(100vh - 60px);
+        }
+
+        .page {
+            display: grid;
+            grid-template-columns: 360px 1fr;
+            gap: 16px;
+            align-items: stretch;
+        }
+
+        /* ─── Cards ─────────────────────────────────────────────────── */
+
+        .card {
+            background: var(--panel-1);
+            border: 1px solid rgba(21, 64, 91, .08);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+        }
+
+        .card-head {
+            padding: 18px 20px 10px;
+            border-bottom: 1px solid var(--line);
+        }
+
+        .card-head h2,
+        .card-head h3 {
+            margin: 0;
+            font-size: 18px;
+            color: var(--primary-1);
+        }
+
+        .card-head p {
+            margin: 6px 0 0;
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .card-body {
+            padding: 18px 20px 20px;
+        }
+
+        /* ─── Filter sidebar ────────────────────────────────────────── */
+
+        .filter {
+            position: sticky;
+            top: 60px;
+            overflow: hidden;
+        }
+
+        /* ─── Form fields ───────────────────────────────────────────── */
+
+        .field {
+            margin-bottom: 14px;
+        }
+
+        .field label {
+            display: block;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--muted);
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: .4px;
+        }
+
+        input[type="text"],
+        select {
+            width: 100%;
+            padding: 11px 12px;
+            border: 1px solid #cfd9e3;
+            border-radius: 12px;
+            background: #fff;
+            color: var(--text);
+            outline: none;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .filter-button {
+            display: flex;
+            gap: 10px;
+            padding-top: 8px;
+            flex-wrap: wrap;
+        }
+
+        /* ─── Right section ─────────────────────────────────────────── */
+
+        .section {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        /* ─── Tabs ──────────────────────────────────────────────────── */
+
+        .tabs-card {
+            overflow: hidden;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 8px;
+            padding: 14px 14px 0;
+            flex-wrap: wrap;
+            border-bottom: 1px solid var(--line);
+            background: #fbfdff;
+        }
+
+        .tab {
+            border: none;
+            background: #eef5fa;
+            color: var(--primary-1);
+            padding: 11px 14px;
+            border-radius: 12px 12px 0 0;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .tab.active {
+            background: #fff;
+            box-shadow: 0 -1px 0 #fff, inset 0 2px 0 var(--primary-2);
+        }
+
+        .tab-panel {
+            display: none;
+            padding: 18px;
+            height: 575px;
+            overflow-y: auto;
+        }
+
+        .tab-panel.active {
+            display: block;
+        }
+
+        /* ─── Summary & data grids ──────────────────────────────────── */
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 14px;
+            margin-bottom: 18px;
+        }
+
+        .mini {
+            background: var(--panel-2);
+            border: 1px solid #dbe8f2;
+            border-radius: 16px;
+            padding: 16px;
+        }
+
+        .mini .k {
+            font-size: 12px;
+            color: var(--muted);
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: .4px;
+        }
+
+        .mini .v {
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--primary-1);
+            margin-top: 6px;
+        }
+
+        .section-title {
+            margin: 0 0 12px;
+            color: var(--primary-1);
+            font-size: 17px;
+        }
+
+        .data-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .data-item {
+            border: 1px solid #dce6ef;
+            border-radius: 14px;
+            padding: 12px;
+            background: #fff;
+        }
+
+        .data-item .k {
+            font-size: 11px;
+            color: var(--muted);
+            text-transform: uppercase;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .data-item .v {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        /* ─── Accordion ─────────────────────────────────────────────── */
+
+        .accordion {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .acc-item {
+            border: 1px solid #dbe7f1;
+            border-radius: 16px;
+            overflow: hidden;
+            background: #fff;
+        }
+
+        .acc-head {
+            width: 100%;
+            text-align: left;
+            background: #f8fbfe;
+            border: none;
+            padding: 16px 18px;
+            font-size: 15px;
+            font-weight: 800;
+            color: var(--primary-1);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .acc-head span:last-child {
+            color: var(--primary-2);
+        }
+
+        .acc-body {
+            display: none;
+            padding: 8px 16px 16px;
+        }
+
+        .acc-item.open .acc-body {
+            display: block;
+        }
+
+        /* ─── Tables ────────────────────────────────────────────────── */
+
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            overflow: hidden;
+            border-radius: 14px;
+            font-size: 13px;
+            margin-bottom: 24px;
+        }
+
+        th,
+        td {
+            padding: 11px 12px;
+            border-bottom: 1px solid #e4ecf3;
+            text-align: left;
+            vertical-align: middle;
+        }
+
+        th {
+            background: #eff5fa;
+            color: var(--primary-1);
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: .35px;
+        }
+
+        tr:nth-child(even) td {
+            background: #fbfdff;
+        }
+
+        /* ─── Badges ────────────────────────────────────────────────── */
+
+        .badge {
+            display: inline-block;
+            padding: 6px 10px;
+            border-radius: 999px;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: .3px;
+        }
+
+        .badge-ok {
+            background: var(--ok);
+            color: #1f6b3b;
+        }
+
+        .badge-warn {
+            background: var(--warn);
+            color: #8a6514;
+        }
+
+        /* ─── Modal ─────────────────────────────────────────────────── */
+
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(21, 64, 91, .45);
+            z-index: 100;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal {
+            background: var(--panel-1);
+            border-radius: var(--radius);
+            box-shadow: 0 20px 60px rgba(21, 64, 91, .25);
+            width: 90%;
+            max-width: 80vw;
+            max-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .modal-head {
+            padding: 18px 22px 14px;
+            border-bottom: 1px solid var(--line);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-shrink: 0;
+        }
+
+        .modal-head h2 {
+            margin: 0;
+            font-size: 18px;
+            color: var(--primary-1);
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 22px;
+            color: var(--muted);
+            cursor: pointer;
+            line-height: 1;
+            padding: 0 4px;
+        }
+
+        .modal-close:hover {
+            color: var(--primary-1);
+        }
+
+        .modal-body {
+            padding: 18px 22px 22px;
+            overflow-x: auto;
+            overflow-y: auto;
+        }
+
+        /* ─── Responsive ────────────────────────────────────────────── */
+
+        @media (max-width: 1200px) {
+            .page {
+                grid-template-columns: 1fr;
             }
-            header {
-                height: 56px;
-            }
-            aside {
-                height: calc(100vh - 56px - 40px);
-                width: 220px;
-                margin-top: 56px;
-                margin-bottom: 40px;
-            }
-            main {
-                height: calc(100vh - 56px - 40px);
-                margin-top: 56px;
-                margin-left: 220px;
-                margin-bottom: 40px;
-            }
-            .table-container {
-                flex: 1;
-                overflow-y: auto;
-            }
-            .table thead {
-                position: sticky;
+
+            .filter {
+                position: relative;
                 top: 0;
             }
-            .table thead th {
-                height: 50px;
-                vertical-align: middle;
-                white-space: nowrap;
-                cursor: pointer;
-                background-color: var(--bs-primary);
-                color: var(--bs-white);
-                border-bottom: none;
+
+            .summary-grid,
+            .data-grid {
+                grid-template-columns: repeat(2, 1fr);
             }
-            .table thead th:first-child {
-                border-top-left-radius: 0.5rem;
+        }
+
+        @media (max-width: 720px) {
+            .summary-grid,
+            .data-grid,
+            .grid-2 {
+                grid-template-columns: 1fr;
             }
-            .table thead th:last-child {
-                border-top-right-radius: 0.5rem;
+
+            .header {
+                padding: 16px;
             }
-            .table tbody td {
-                height: 50px;
-                vertical-align: middle;
-                white-space: nowrap;
+
+            .main {
+                padding: 0 12px 24px;
             }
-            .table tbody tr:last-child td {
-                border-bottom: none;
+
+            .tab-panel {
+                padding: 14px;
             }
-            .table tbody tr:last-child td:first-child {
-                border-bottom-left-radius: 0.5rem;
-            }
-            .table tbody tr:last-child td:last-child {
-                border-bottom-right-radius: 0.5rem;
-            }
-            .modal.fade {
-                transition: opacity 0.4s linear;
-            }
-            .modal-dialog {
-                transition: opacity 0.4s linear;
-            }
-            .modal-header {
-                border-bottom: none;
-            }
-            .btn-close:focus {
-                box-shadow: none;
-            }
-            .modal-body textarea {
-                resize: none;
-            }
-            .modal-table-container {
-                max-height: 200px; 
-                overflow-y: auto;
-            }
-            .modal-footer {
-                border-top: none;
-            }
-            .toast-container{
-                margin-bottom: 40px;   
-            }
-            .toast {
-                transition: opacity 0.6s linear;
-            }
-            .toast.showing {
-                transition: opacity 0.6s linear; 
-            }
-            footer {
-                height: 40px;
-            }
-        </style>
-    </head>
-    <body>
-        <header class="navbar fixed-top bg-primary">
-            <div class="container-fluid">
-                <a class="navbar-brand fw-bold text-white" href="#" onclick="location.reload();">Mi Aplicación</a>
-                <div class="dropdown">
-                    <button class="btn d-flex align-items-center p-0 text-white" data-bs-toggle="dropdown">
-                        <i class="bi bi-person-circle fs-4"></i><i class="bi bi-chevron-down ms-2"></i>
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <header class="header">
+        <div class="header-brand">
+            <div class="brand-badge">
+                <span>A</span>
+            </div>
+            <div class="brand-name">
+                <h1>ABAN - Admin</h1>
+            </div>
+        </div>
+        <div class="header-button">
+            <button class="btn btn-soft">Button 1</button>
+            <button class="btn btn-soft">Button 2</button>
+            <button class="btn btn-primary">Button 3</button>
+            <button class="btn btn-primary">Button 4</button>
+        </div>
+    </header>
+
+    <main class="main">
+
+        <div class="page">
+
+            <!-- ── Sidebar de búsqueda ───────────────────────────── -->
+
+            <aside class="card filter">
+
+                <div class="card-head">
+                    <h2>Búsqueda por Deudor</h2>
+                </div>
+                <div class="card-body">
+                    <div class="field">
+                        <label>CUIL</label>
+                        <input type="text" value="20334445550" />
+                    </div>
+                    <div class="field">
+                        <label>DNI</label>
+                        <input type="text" value="33444555" />
+                    </div>
+                    <div class="field">
+                        <label>Deudor</label>
+                        <input type="text" value="Juan Pérez" />
+                    </div>
+                    <div class="field">
+                        <label>Teléfono</label>
+                        <input type="text" value="1122334455" />
+                    </div>
+                    <div class="filter-button">
+                        <button class="btn btn-primary btn-block">Buscar</button>
+                        <button class="btn btn-primary btn-block">Borrar</button>
+                    </div>
+                </div>
+
+                <div class="card-head">
+                    <h2>Búsqueda por Filtro</h2>
+                </div>
+                <div class="card-body">
+                    <div class="grid-2">
+                        <div class="field">
+                            <label>Condición</label>
+                            <select>
+                                <option value="activo" selected>Activo</option>
+                                <option value="cancelado">Cancelado</option>
+                            </select>
+                        </div>
+                        <div class="field">
+                            <label>Estado</label>
+                            <select>
+                                <option value="interna" selected>Gestión interna</option>
+                                <option value="abogado">Abogado</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="grid-2">
+                        <div class="field">
+                            <label>Cartera</label>
+                            <select>
+                                <option value="1-20" selected>01 a 20 días</option>
+                                <option value="21-40">21 a 40 días</option>
+                            </select>
+                        </div>
+                        <div class="field">
+                            <label>Operador</label>
+                            <select>
+                                <option value="juanp" selected>Juan P.</option>
+                                <option value="mariaa">Maria A.</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="grid-2">
+                        <div class="field">
+                            <label>Vencimiento desde</label>
+                            <input type="text" value="01/01/2026" />
+                        </div>
+                        <div class="field">
+                            <label>Vencimiento hasta</label>
+                            <input type="text" value="01/01/2026" />
+                        </div>
+                    </div>
+                    <div class="filter-button">
+                        <button class="btn btn-primary btn-block" id="btn-buscar-filtro">Buscar</button>
+                        <button class="btn btn-primary btn-block">Borrar</button>
+                    </div>
+                </div>
+
+            </aside>
+
+            <!-- ── Sección principal ─────────────────────────────── -->
+
+            <section class="section">
+
+                <!-- Información de Deudor -->
+                <div class="acc-item open">
+                    <button class="acc-head">
+                        <span>Información de Deudor</span>
+                        <span>▾</span>
                     </button>
-                    <ul class="dropdown-menu dropdown-menu-end">
-                        <li>
-                            <a class="dropdown-item" href="#">Cerrar sesión</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </header>
-        <aside class="position-fixed top-0 bg-dark">
-            <div class="p-3">
-                <h5 class="text-white">Menú</h5>
-                <ul class="nav flex-column" id="menuAccordion">
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="#">
-                            <i class="bi bi-house-fill me-2"></i>Inicio
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link d-flex justify-content-between align-items-center collapsed text-white" data-bs-toggle="collapse" href="#submenuClientes">
-                            <div>
-                                <i class="bi bi-people-fill me-2"></i>Clientes
-                            </div>
-                            <i class="bi bi-chevron-down"></i>
-                        </a>
-                        <div class="collapse" id="submenuClientes" data-bs-parent="#menuAccordion">
-                            <ul class="nav flex-column ms-4">
-                                <li><a class="nav-link text-white" href="#">Segmento 1</a></li>
-                                <li><a class="nav-link text-white" href="#">Segmento 2</a></li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link d-flex justify-content-between align-items-center collapsed text-white" data-bs-toggle="collapse" href="#submenuReportes">
-                            <div>
-                                <i class="bi bi-bar-chart-fill me-2"></i>Reportes
-                            </div>
-                            <i class="bi bi-chevron-down"></i>
-                        </a>
-                        <div class="collapse" id="submenuReportes" data-bs-parent="#menuAccordion">
-                            <ul class="nav flex-column ms-4">
-                                <li><a class="nav-link text-white" href="#">KPIs</a></li>
-                                <li><a class="nav-link text-white" href="#">OKRs</a></li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="#">
-                            <i class="bi bi-gear-fill me-2"></i>Ajustes
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </aside>
-        <main class="d-flex flex-column">
-            <div class="d-flex flex-column h-100">
-                <div class="d-flex justify-content-between align-items-center px-3 py-1">
-                    <div class="d-flex align-items-center">
-                        <i class="bi bi-person-plus-fill fs-2"></i>
-                        <h2 class="h5 m-0 ms-2">Onboarding</h2>
-                    </div>
-                    <div class="d-flex align-items-center">
-                        <h2 class="h6 m-0 me-2 text-muted">Total:</h2>
-                        <h2 id="total-registros" class="h6 m-0 me-3 text-muted"></h2>
-                        <button class="btn btn-primary py-0 px-1" onclick="downloadCSV()"><i class="bi bi-download fs-5"></i></button>
+                    <div class="acc-body">
+                        <table style="table-layout: fixed; width: 100%;">
+                            <colgroup>
+                                <col style="width: 12.50%" span="8">
+                            </colgroup>
+                            <thead>
+                                <tr>
+                                    <th>CUIL</th>
+                                    <th>DNI</th>
+                                    <th>Legajo</th>
+                                    <th>Deudor</th>
+                                    <th>Teléfono</th>
+                                    <th>Email</th>
+                                    <th>Condición</th>
+                                    <th>Estado</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>20334445550</td>
+                                    <td>33444555</td>
+                                    <td>123456</td>
+                                    <td>Juan Pérez</td>
+                                    <td>1122334455</td>
+                                    <td>jperez@mail.com</td>
+                                    <td>Activo</td>
+                                    <td>Gestión interna</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
-                <div class="px-3 pb-3"> 
-                    <div class="row g-3">
-                        <div class="col">
-                            <input type="text" class="form-control rounded-3 text-muted" id="input-cuil" placeholder="Buscar por CUIL...">
-                        </div>
-                        <div class="col">
-                            <div class="dropdown" id="dropdown-nivel-container">
-                                <button class="form-control rounded-3 text-start text-nowrap text-muted" type="button" id="dropdownNivel" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Filtrar por Nivel...
-                                </button>
-                                <ul class="dropdown-menu" id="filter-nivel"></ul>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="dropdown" id="dropdown-estado-container">
-                                <button class="form-control rounded-3 text-start text-nowrap text-muted" type="button" id="dropdownEstado" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Filtrar por Estado...
-                                </button>
-                                <ul class="dropdown-menu" id="filter-estado"></ul>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="dropdown" id="dropdown-usuario-container">
-                                <button class="form-control rounded-3 text-start text-nowrap text-muted" type="button" id="dropdownUsuario" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Filtrar por Usuario...
-                                </button>
-                                <ul class="dropdown-menu" id="filter-usuario"></ul>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="dropdown" id="dropdown-tipo-container">
-                                <button class="form-control rounded-3 text-start text-nowrap text-muted" type="button" id="dropdownTipo" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Filtrar por Tipo...
-                                </button>
-                                <ul class="dropdown-menu" id="filter-tipo"></ul>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <input type="text" class="form-control rounded-3 text-muted" id="input-detalle" placeholder="Buscar por Detalle...">
-                        </div>
+
+                <!-- Tabs -->
+                <div class="card tabs-card">
+                    <div class="tabs">
+                        <button class="tab active" style="height: 40px; width: 175px;" data-tab="tab-resumen">Resumen</button>
+                        <button class="tab" style="height: 40px; width: 175px;" data-tab="tab-datoscontacto">Datos de Contacto</button>
+                        <button class="tab" style="height: 40px; width: 175px;" data-tab="tab-gestionpago">Gestión de Pago</button>
+                        <button class="tab" style="height: 40px; width: 175px;" data-tab="tab-historialtareas">Historial de Tareas</button>
+                        <button class="tab" style="height: 40px; width: 175px;" data-tab="tab-historialconvenios">Historial de Convenios</button>
+                        <button class="tab" style="height: 40px; width: 175px;" data-tab="tab-informacionadicional">Información Adicional</button>
                     </div>
-                </div>
-                <div class="table-container px-3 pb-3">
-                    <table class="table table-striped mb-0">
-                        <thead>
-                            <tr>
-                                <th data-column-index="0"><div>Fecha de Inicio<i class="bi bi-chevron-expand ms-2"></i></div></th>
-                                <th data-column-index="1"><div>CUIL<i class="bi bi-chevron-expand ms-2"></i></div></th>
-                                <th data-column-index="2"><div>Nombre y Apellido<i class="bi bi-chevron-expand ms-2"></i></div></th>
-                                <th data-column-index="3"><div>Teléfono<i class="bi bi-chevron-expand ms-2"></i></div></th>
-                                <th data-column-index="4"><div>Email<i class="bi bi-chevron-expand ms-2"></i></div></th>
-                                <th data-column-index="5"><div>Nivel<i class="bi bi-chevron-expand ms-2"></i></div></th>
-                                <th data-column-index="6"><div>Estado<i class="bi bi-chevron-expand ms-2"></i></div></th>
-                                <th data-column-index="7"><div>Actualización<i class="bi bi-chevron-expand ms-2"></i></div></th>
-                                <th data-column-index="8"><div>Usuario<i class="bi bi-chevron-expand ms-2"></i></div></th>
-                                <th data-column-index="9"><div>Tipo<i class="bi bi-chevron-expand ms-2"></i></div></th>
-                                <th data-column-index="10"><div>Detalle<i class="bi bi-chevron-expand ms-2"></i></div></th>
-                                <th>Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>16/09/2025 14:25</td>
-                                <td>20107106779</td>
-                                <td>Leandro Ferreyra</td>
-                                <td>1137437220</i></td>
-                                <td>lferreyra@mail.com</i></td>
-                                <td>C1</td>
-                                <td>7</td>
-                                <td>16/09/2025 17:01</td>
-                                <td>lmendez</td>
-                                <td>Esperando Equipo Interno</td>
-                                <td>Caso #2254</td>
-                                <td>
-                                    <button class="btn btn-primary py-0 px-1" data-bs-toggle="modal" data-bs-target="#gestionModal"><i class="bi bi-journal fs-5"></i></button>
-                                    <button class="btn btn-primary py-0 px-1"><i class="bi bi-person fs-5"></i></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>15/09/2025 21:04</td>
-                                <td>20311463497</td>
-                                <td>Marcos Hierro</td>
-                                <td>1163144868</td>
-                                <td>mhierro@mail.com</td>
-                                <td>C2</td>
-                                <td>5</td>
-                                <td>16/09/2025 12:45</td>
-                                <td>bsalcedo</td>
-                                <td>Evaluar</td>
-                                <td>Solicitud actualizada</td>
-                                <td>
-                                    <button class="btn btn-primary py-0 px-1" data-bs-toggle="modal" data-bs-target="#gestionModal"><i class="bi bi-journal fs-5"></i></button>
-                                    <button class="btn btn-primary py-0 px-1"><i class="bi bi-person fs-5"></i></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>14/09/2025 18:42</td>
-                                <td>27291463591</td>
-                                <td>Romina Ortega</td>
-                                <td>2216104806</td>
-                                <td>rortega@mail.com</td>
-                                <td>D1</td>
-                                <td>4.2</td>
-                                <td>16/09/2025 12:45</td>
-                                <td>crojas</td>
-                                <td>Esperando RENAPER</td>
-                                <td>Biometría facial</td>
-                                <td>
-                                    <button class="btn btn-primary py-0 px-1" data-bs-toggle="modal" data-bs-target="#gestionModal"><i class="bi bi-journal fs-5"></i></button>
-                                    <button class="btn btn-primary py-0 px-1"><i class="bi bi-person fs-5"></i></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>14/09/2025 13:46</td>
-                                <td>20101425854</td>
-                                <td>Javier Herrera</td>
-                                <td>3514697820</td>
-                                <td>jherrera@mail.com</td>
-                                <td>C1</td>
-                                <td>5</td>
-                                <td>16/09/2025 12:33</td>
-                                <td>cliente</td>
-                                <td>Evaluar</td>
-                                <td>Solicitud actualizada</td>
-                                <td>
-                                    <button class="btn btn-primary py-0 px-1" data-bs-toggle="modal" data-bs-target="#gestionModal"><i class="bi bi-journal fs-5"></i></button>
-                                    <button class="btn btn-primary py-0 px-1"><i class="bi bi-person fs-5"></i></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>14/09/2025 07:55</td>
-                                <td>20191586441</td>
-                                <td>Diego Figueroa</td>
-                                <td>2616421536</td>
-                                <td>dfigueroa@mail.com</td>
-                                <td>D1</td>
-                                <td>6.1</td>
-                                <td>16/09/2025 09:52</td>
-                                <td>lmendez</td>
-                                <td>Contacto Pendiente</td>
-                                <td>Sin respuesta</td>
-                                <td>
-                                    <button class="btn btn-primary py-0 px-1" data-bs-toggle="modal" data-bs-target="#gestionModal"><i class="bi bi-journal fs-5"></i></button>
-                                    <button class="btn btn-primary py-0 px-1"><i class="bi bi-person fs-5"></i></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>15/09/2025 05:09</td>
-                                <td>20307522114</td>
-                                <td>Emanuel Paz</td>
-                                <td>1142315015</td>
-                                <td>epaz@mail.com</td>
-                                <td>C1</td>
-                                <td>4.1</td>
-                                <td>16/09/2025 09:31</td>
-                                <td>bsalcedo</td>
-                                <td>Esperando Cliente</td>
-                                <td>Pendiente DNI frente</td>
-                                <td>
-                                    <button class="btn btn-primary py-0 px-1" data-bs-toggle="modal" data-bs-target="#gestionModal"><i class="bi bi-journal fs-5"></i></button>
-                                    <button class="btn btn-primary py-0 px-1"><i class="bi bi-person fs-5"></i></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>15/09/2025 16:58</td>
-                                <td>27183541582</td>
-                                <td>Leticia Heredia</td>
-                                <td>2236380354</td>
-                                <td>lheredia@mail.com</td>
-                                <td>D2</td>
-                                <td>7</td>
-                                <td>16/09/2025 09:17</td>
-                                <td>evargas</td>
-                                <td>Esperando Equipo Interno</td>
-                                <td>Caso #2156</td>
-                                <td>
-                                    <button class="btn btn-primary py-0 px-1" data-bs-toggle="modal" data-bs-target="#gestionModal"><i class="bi bi-journal fs-5"></i></button>
-                                    <button class="btn btn-primary py-0 px-1"><i class="bi bi-person fs-5"></i></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>14/09/2025 06:39</td>
-                                <td>20134559415</td>
-                                <td>Mateo Leiva</td>
-                                <td>3415716715</i></td>
-                                <td>mleiva@mail.com</i></td>
-                                <td>D1</td>
-                                <td>6.1</td>
-                                <td>15/09/2025 14:32</td>
-                                <td>evargas</td>
-                                <td>Contacto Pendiente</td>
-                                <td>Llamar 16hs</td>
-                                <td>
-                                    <button class="btn btn-primary py-0 px-1" data-bs-toggle="modal" data-bs-target="#gestionModal"><i class="bi bi-journal fs-5"></i></button>
-                                    <button class="btn btn-primary py-0 px-1"><i class="bi bi-person fs-5"></i></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>15/09/2025 07:34</td>
-                                <td>27296896796</td>
-                                <td>Valeria Castillo</td>
-                                <td>3516340229</td>
-                                <td>vcastillo@mail.com</td>
-                                <td>C2</td>
-                                <td>5</td>
-                                <td>15/09/2025 14:08</td>
-                                <td>cliente</td>
-                                <td>Evaluar</td>
-                                <td>Solicitud actualizada</td>
-                                <td>
-                                    <button class="btn btn-primary py-0 px-1" data-bs-toggle="modal" data-bs-target="#gestionModal"><i class="bi bi-journal fs-5"></i></button>
-                                    <button class="btn btn-primary py-0 px-1"><i class="bi bi-person fs-5"></i></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>14/09/2025 20:03</td>
-                                <td>27167842448</td>
-                                <td>Julieta Godoy</td>
-                                <td>2236382335</td>
-                                <td>jgodoy@mail.com</td>
-                                <td>AB</td>
-                                <td>4.2</td>
-                                <td>15/09/2025 11:34</td>
-                                <td>crojas</td>
-                                <td>Esperando RENAPER</td>
-                                <td>Biometría facial</td>
-                                <td>
-                                    <button class="btn btn-primary py-0 px-1" data-bs-toggle="modal" data-bs-target="#gestionModal"><i class="bi bi-journal fs-5"></i></button>
-                                    <button class="btn btn-primary py-0 px-1"><i class="bi bi-person fs-5"></i></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>14/09/2025 03:09</td>
-                                <td>27278085275</td>
-                                <td>Samanta Navarro</td>
-                                <td>1162777685</i></td>
-                                <td>snavarro@mail.com</i></td>
-                                <td>AB</td>
-                                <td>4.2</td>
-                                <td>14/09/2025 17:27</td>
-                                <td>evargas</td>
-                                <td>Esperando RENAPER</td>
-                                <td>Número de trámite</td>
-                                <td>
-                                    <button class="btn btn-primary py-0 px-1" data-bs-toggle="modal" data-bs-target="#gestionModal"><i class="bi bi-journal fs-5"></i></button>
-                                    <button class="btn btn-primary py-0 px-1"><i class="bi bi-person fs-5"></i></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>14/09/2025 04:39</td>
-                                <td>20260540012</td>
-                                <td>Ignacio Torres</td>
-                                <td>2214885640</td>
-                                <td>itorres@mail.com</td>
-                                <td>C2</td>
-                                <td>4.2</td>
-                                <td>14/09/2025 15:59</td>
-                                <td>evargas</td>
-                                <td>Esperando RENAPER</td>
-                                <td>Número de trámite</td>
-                                <td>
-                                    <button class="btn btn-primary py-0 px-1" data-bs-toggle="modal" data-bs-target="#gestionModal"><i class="bi bi-journal fs-5"></i></button>
-                                    <button class="btn btn-primary py-0 px-1"><i class="bi bi-person fs-5"></i></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>14/09/2025 15:35</td>
-                                <td>27166391426</td>
-                                <td>Valentina Soria</td>
-                                <td>3415951990</td>
-                                <td>vsoria@mail.com</td>
-                                <td>C2</td>
-                                <td>5</td>
-                                <td>14/09/2025 15:35</td>
-                                <td>cliente</td>
-                                <td>Evaluar</td>
-                                <td>Solicitud completada</td>
-                                <td>
-                                    <button class="btn btn-primary py-0 px-1" data-bs-toggle="modal" data-bs-target="#gestionModal"><i class="bi bi-journal fs-5"></i></button>
-                                    <button class="btn btn-primary py-0 px-1"><i class="bi bi-person fs-5"></i></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>14/09/2025 13:32</td>
-                                <td>27178475138</td>
-                                <td>Camila Duarte</td>
-                                <td>1149495281</i></td>
-                                <td>cduarte@mail.com</td>
-                                <td>D2</td>
-                                <td>5</td>
-                                <td>14/09/2025 13:32</td>
-                                <td>cliente</td>
-                                <td>Evaluar</td>  
-                                <td>Solicitud completada</td>
-                                <td>
-                                    <button class="btn btn-primary py-0 px-1" data-bs-toggle="modal" data-bs-target="#gestionModal"><i class="bi bi-journal fs-5"></i></button>
-                                    <button class="btn btn-primary py-0 px-1"><i class="bi bi-person fs-5"></i></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>14/09/2025 05:33</td>
-                                <td>20326970244</td>
-                                <td>Lucas Montoya</td>
-                                <td>2616074096</i></td>
-                                <td>lmontoya@mail.com</i></td>
-                                <td>D2</td>
-                                <td>4.1</td>
-                                <td>14/09/2025 10:33</td>
-                                <td>crojas</td>
-                                <td>Esperando Cliente</td>
-                                <td>Pendiente DNI dorso</td>
-                                <td>
-                                    <button class="btn btn-primary py-0 px-1" data-bs-toggle="modal" data-bs-target="#gestionModal"><i class="bi bi-journal fs-5"></i></button>
-                                    <button class="btn btn-primary py-0 px-1"><i class="bi bi-person fs-5"></i></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>14/09/2025 09:59</td>
-                                <td>20313577483</td>
-                                <td>Javier Saravia</td>
-                                <td>3415931457</td>
-                                <td>jsaravia@mail.com</td>
-                                <td>C1</td>
-                                <td>5</td>
-                                <td>14/09/2025 09:59</td>
-                                <td>cliente</td>
-                                <td>Evaluar</td>
-                                <td>Solicitud completada</td>
-                                <td>
-                                    <button class="btn btn-primary py-0 px-1" data-bs-toggle="modal" data-bs-target="#gestionModal"><i class="bi bi-journal fs-5"></i></button>
-                                    <button class="btn btn-primary py-0 px-1"><i class="bi bi-person fs-5"></i></button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </main>
-        <div class="modal fade" id="gestionModal" tabindex="-1">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header pb-0">
-                        <i class="bi bi-journal me-2 fs-5"></i>
-                        <h5 class="modal-title mb-0">Gestión</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                    </div>
-                    <div class="modal-body">
-                        <form id="gestionForm">
-                            <p class="fw-bold my-2">
-                                </i><span id="infoClienteTexto"></span>
-                            </p>
-                            <div class="my-4">
-                                <h6>Tipo</h6>
-                                <div class="dropdown">
-                                    <button class="form-control rounded-3 text-start text-nowrap text-muted" type="button" id="tipoDropdownButton" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <span id="tipoSeleccionadoTexto">Seleccionar Tipo...</span> 
-                                        <span class="dropdown-toggle-split"></span> 
-                                    </button>
-                                    <ul class="dropdown-menu w-100 rounded-3" id="tipoDropdownMenu">
-                                        <li><a class="dropdown-item" href="#">Contacto Pendiente</a></li>
-                                        <li><a class="dropdown-item" href="#">Esperando Cliente</a></li>
-                                        <li><a class="dropdown-item" href="#">Esperando Equipo Interno</a></li>
-                                        <li><a class="dropdown-item" href="#">Esperando RENAPER</a></li>
-                                    </ul>
-                                    <input type="hidden" id="tipoInputHidden" name="tipo" value=""> 
+
+                    <!-- Tab: Resumen -->
+                    <div id="tab-resumen" class="tab-panel active">
+                        <div class="accordion">
+
+                            <div class="acc-item open">
+                                <button class="acc-head">
+                                    <span>Préstamo Actual</span>
+                                    <span>▾</span>
+                                </button>
+                                <div class="acc-body">
+                                    <div class="summary-grid">
+                                        <div class="mini">
+                                            <div class="k">Deudor</div>
+                                            <div class="v">Juan Pérez</div>
+                                        </div>
+                                        <div class="mini">
+                                            <div class="k">Vencimiento Actual</div>
+                                            <div class="v">15/08/2026</div>
+                                        </div>
+                                        <div class="mini">
+                                            <div class="k">Deuda Actual</div>
+                                            <div class="v">$ 2.845.330</div>
+                                        </div>
+                                        <div class="mini">
+                                            <div class="k">Última gestión</div>
+                                            <div class="v">Ayer 16:42</div>
+                                        </div>
+                                    </div>
+                                    <div class="data-grid">
+                                        <div class="data-item"><div class="k">Condición</div><div class="v">Activo</div></div>
+                                        <div class="data-item"><div class="k">Estado</div><div class="v">Gestión interna</div></div>
+                                        <div class="data-item"><div class="k">Cartera</div><div class="v">Mora Temprana</div></div>
+                                        <div class="data-item"><div class="k">Categoría</div><div class="v">Cliente A</div></div>
+                                        <div class="data-item"><div class="k">Préstamos</div><div class="v">8 préstamos</div></div>
+                                        <div class="data-item"><div class="k">Extensiones</div><div class="v">5 extensiones</div></div>
+                                        <div class="data-item"><div class="k">Extensiones (Préstamo Actual)</div><div class="v">1 extensión</div></div>
+                                        <div class="data-item"><div class="k">Contactos (Préstamo Actual)</div><div class="v">5 contactos</div></div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="my-4">
-                                <h6>Detalle</h6>
-                                <textarea class="form-control" id="detalleModal" rows="2" placeholder="Ingresar Detalle..."></textarea>
-                            </div>
-                            <div class="my-4">
-                                <h6>Historial</h6>
-                                <div id="historial-sin-gestiones" class="alert alert-light py-2" style="display: none;">Sin gestiones</div>
-                                <div class="modal-table-container" id="historial-table-container" >
-                                    <table class="table table-striped mb-0">
+
+                            <div class="acc-item open">
+                                <button class="acc-head">
+                                    <span>Última Tarea</span>
+                                    <span>▾</span>
+                                </button>
+                                <div class="acc-body">
+                                    <table style="table-layout: fixed; width: 100%;">
+                                        <colgroup>
+                                            <col style="width: 12.50%" span="8">
+                                        </colgroup>
                                         <thead>
                                             <tr>
-                                                <th>Actualización</th>
-                                                <th>Usuario</th>
-                                                <th>Tipo</th>
-                                                <th>Detalle</th>
+                                                <th>Fecha</th>
+                                                <th>Legajo</th>
+                                                <th>Contacto</th>
+                                                <th>Respuesta</th>
+                                                <th>Gestión</th>
+                                                <th>Operador</th>
+                                                <th>Fecha de Promesa</th>
+                                                <th>Monto de Promesa</th>
                                             </tr>
                                         </thead>
-                                        <tbody id="historial-table-body"></tbody>
+                                        <tbody>
+                                            <tr>
+                                                <td>10/04/2026 16:42</td>
+                                                <td>185421</td>
+                                                <td>Si</td>
+                                                <td>Acuerdo - Cancelación</td>
+                                                <td>Llamado</td>
+                                                <td>Juan P.</td>
+                                                <td>20/04/2026</td>
+                                                <td>$ 845.000</td>
+                                            </tr>
+                                        </tbody>
                                     </table>
                                 </div>
-                            </div>    
-                        </form>
+                            </div>
+
+                        </div>
                     </div>
-                    <div class="modal-footer d-flex justify-content-end">
-                        <button type="button" class="btn btn-primary" id="guardarGestionBtn">Guardar</button>
+
+                    <!-- Tab: Datos de Contacto -->
+                    <div id="tab-datoscontacto" class="tab-panel">
+                        <div class="accordion">
+
+                            <div class="acc-item open">
+                                <button class="acc-head">
+                                    <span>Teléfono</span>
+                                    <span>▾</span>
+                                </button>
+                                <div class="acc-body">
+                                    <table style="table-layout: fixed; width: 100%;">
+                                        <colgroup>
+                                            <col style="width: 14.28%" span="7">
+                                        </colgroup>
+                                        <thead>
+                                            <tr>
+                                                <th>Teléfono</th>
+                                                <th>Titular</th>
+                                                <th>Origen</th>
+                                                <th>Estado</th>
+                                                <th>Alta</th>
+                                                <th>Operador</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td><span class="badge badge-ok" style="cursor: pointer;">Agregar</span></td>
+                                                <td></td><td></td><td></td><td></td><td></td><td></td>
+                                            </tr>
+                                            <tr>
+                                                <td>1122334455</td>
+                                                <td>Propio</td>
+                                                <td>Aban</td>
+                                                <td>Activo</td>
+                                                <td>17/09/2025</td>
+                                                <td>Juan P.</td>
+                                                <td><span class="badge badge-warn" style="cursor: pointer;">Editar</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>1133445566</td>
+                                                <td>Maria B. (Hermana)</td>
+                                                <td>Certero</td>
+                                                <td>Activo</td>
+                                                <td>04/03/2025</td>
+                                                <td>Alan A.</td>
+                                                <td><span class="badge badge-warn" style="cursor: pointer;">Editar</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>1123452345</td>
+                                                <td>Propio</td>
+                                                <td>Aban</td>
+                                                <td>Inactivo</td>
+                                                <td>29/01/2025</td>
+                                                <td>Juan P.</td>
+                                                <td><span class="badge badge-warn" style="cursor: pointer;">Editar</span></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="acc-item open">
+                                <button class="acc-head">
+                                    <span>Email</span>
+                                    <span>▾</span>
+                                </button>
+                                <div class="acc-body">
+                                    <table style="table-layout: fixed; width: 100%;">
+                                        <colgroup>
+                                            <col style="width: 14.28%" span="7">
+                                        </colgroup>
+                                        <thead>
+                                            <tr>
+                                                <th>Email</th>
+                                                <th>Titular</th>
+                                                <th>Origen</th>
+                                                <th>Estado</th>
+                                                <th>Alta</th>
+                                                <th>Operador</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td><span class="badge badge-ok" style="cursor: pointer;">Agregar</span></td>
+                                                <td></td><td></td><td></td><td></td><td></td><td></td>
+                                            </tr>
+                                            <tr>
+                                                <td>jperez@mail.com</td>
+                                                <td>Propio</td>
+                                                <td>Aban</td>
+                                                <td>Activo</td>
+                                                <td>17/09/2025</td>
+                                                <td>Juan P.</td>
+                                                <td><span class="badge badge-warn" style="cursor: pointer;">Editar</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>mariab@mail.com</td>
+                                                <td>Maria B. (Hermana)</td>
+                                                <td>Certero</td>
+                                                <td>Activo</td>
+                                                <td>04/03/2025</td>
+                                                <td>Alan A.</td>
+                                                <td><span class="badge badge-warn" style="cursor: pointer;">Editar</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>juanp@mail.com</td>
+                                                <td>Propio</td>
+                                                <td>Certero</td>
+                                                <td>Inactivo</td>
+                                                <td>24/02/2025</td>
+                                                <td>Juan P.</td>
+                                                <td><span class="badge badge-warn" style="cursor: pointer;">Editar</span></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- Tab: Gestión de Pago -->
+                    <div id="tab-gestionpago" class="tab-panel">
+                        <div class="accordion">
+
+                            <div class="acc-item open">
+                                <button class="acc-head">
+                                    <span>Detalle de Préstamo</span>
+                                    <span>▾</span>
+                                </button>
+                                <div class="acc-body">
+                                    <table style="table-layout: fixed; width: 100%;">
+                                        <colgroup>
+                                            <col style="width: 16.66%" span="6">
+                                        </colgroup>
+                                        <thead>
+                                            <tr>
+                                                <th>Otorgamiento</th>
+                                                <th>Vencimiento</th>
+                                                <th>Capital original</th>
+                                                <th>Monto original</th>
+                                                <th>Días de Atraso</th>
+                                                <th>Mora Diaria</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>21/10/2025</td>
+                                                <td>25/11/2025</td>
+                                                <td>$ 55.100</td>
+                                                <td>$ 84.387</td>
+                                                <td>114</td>
+                                                <td>$ 1.100</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="acc-item open">
+                                <button class="acc-head">
+                                    <span>Cancelación y Extensión</span>
+                                    <span>▾</span>
+                                </button>
+                                <div class="acc-body">
+                                    <div style="display: flex; gap: 12px;">
+                                        <div class="field" style="flex: 1;">
+                                            <label>Categoría</label>
+                                            <input type="text" value="Cliente A" />
+                                        </div>
+                                        <div class="field" style="flex: 1;">
+                                            <label>Legajo</label>
+                                            <input type="text" value="123456" />
+                                        </div>
+                                        <div class="field" style="flex: 1;">
+                                            <label>Fecha de Promesa</label>
+                                            <input type="text" value="15/04/2026" />
+                                        </div>
+                                        <div class="field" style="flex: 1;">
+                                            <label>% Bonificación S/ Mora</label>
+                                            <input type="text" value="22 %" />
+                                        </div>
+                                    </div>
+                                    <table style="table-layout: fixed; width: 100%;">
+                                        <colgroup>
+                                            <col style="width: 12.50%" span="8">
+                                        </colgroup>
+                                        <thead>
+                                            <tr>
+                                                <th>Tipo</th>
+                                                <th>Total S/ Mora</th>
+                                                <th>Total Mora</th>
+                                                <th>Total C/ Mora</th>
+                                                <th>Vencimiento | Extensión</th>
+                                                <th>% Máximo de Bonificación</th>
+                                                <th>Total Acuerdo</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Cancelación</td>
+                                                <td>$ 84.300</td>
+                                                <td>$ 125.400</td>
+                                                <td style="font-weight: bold; color: #3787B4;">$ 209.700</td>
+                                                <td>19/09/2026</td>
+                                                <td>100 %</td>
+                                                <td style="font-weight: bold; color: #3787B4;">$ 209.787</td>
+                                                <td><span class="badge badge-ok" style="cursor: pointer;">Cancelación</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Extensión 14</td>
+                                                <td>$ 84.300</td>
+                                                <td>$ 125.400</td>
+                                                <td style="font-weight: bold; color: #3787B4;">$ 137.154</td>
+                                                <td>09/12/2026</td>
+                                                <td>100 %</td>
+                                                <td style="font-weight: bold; color: #3787B4;">$ 137.154</td>
+                                                <td><span class="badge badge-warn" style="cursor: pointer;">Extensión 14</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Extensión 30</td>
+                                                <td>$ 84.300</td>
+                                                <td>$ 125.400</td>
+                                                <td style="font-weight: bold; color: #3787B4;">$ 150.588</td>
+                                                <td>25/12/2026</td>
+                                                <td>100 %</td>
+                                                <td style="font-weight: bold; color: #3787B4;">$ 150.588</td>
+                                                <td><span class="badge badge-warn" style="cursor: pointer;">Extensión 30</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Extensión 44</td>
+                                                <td>$ 84.300</td>
+                                                <td>$ 125.400</td>
+                                                <td style="font-weight: bold; color: #3787B4;">$ 162.343</td>
+                                                <td>08/01/2026</td>
+                                                <td>100 %</td>
+                                                <td style="font-weight: bold; color: #3787B4;">$ 162.343</td>
+                                                <td><span class="badge badge-warn" style="cursor: pointer;">Extensión 44</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Extensión 60</td>
+                                                <td>$ 84.300</td>
+                                                <td>$ 125.400</td>
+                                                <td style="font-weight: bold; color: #3787B4;">$ 175.777</td>
+                                                <td>24/01/2026</td>
+                                                <td>100 %</td>
+                                                <td style="font-weight: bold; color: #3787B4;">$ 175.777</td>
+                                                <td><span class="badge badge-warn" style="cursor: pointer;">Extensión 60</span></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="acc-item open">
+                                <button class="acc-head">
+                                    <span>Refinanciación en Cuotas</span>
+                                    <span>▾</span>
+                                </button>
+                                <div class="acc-body">
+                                    <div style="display: flex; gap: 12px;">
+                                        <div class="field" style="flex: 1;">
+                                            <label>Deuda Total</label>
+                                            <input type="text" value="$ 209.700" />
+                                        </div>
+                                        <div class="field" style="flex: 1;">
+                                            <label>Anticipo</label>
+                                            <input type="text" value="$ 50.300" />
+                                        </div>
+                                        <div class="field" style="flex: 1;">
+                                            <label>Fecha de Promesa</label>
+                                            <input type="text" value="14/05/2026" />
+                                        </div>
+                                        <div class="field" style="flex: 1;">
+                                            <label>% Bonificación S/ Mora</label>
+                                            <input type="text" value="22%" />
+                                        </div>
+                                        <div class="field" style="flex: 1;">
+                                            <label>Descuento Mora</label>
+                                            <input type="text" value="$ 15.100" />
+                                        </div>
+                                        <div class="field" style="flex: 1;">
+                                            <label>Total Acuerdo</label>
+                                            <input type="text" value="$ 48.000" />
+                                        </div>
+                                    </div>
+                                    <table style="table-layout: fixed; width: 100%;">
+                                        <colgroup>
+                                            <col style="width: 16.66%" span="6">
+                                        </colgroup>
+                                        <thead>
+                                            <tr>
+                                                <th>Anticipo</th>
+                                                <th>Cantidad de Cuotas</th>
+                                                <th>Valor de Cuota</th>
+                                                <th>Detalle Refinanciación</th>
+                                                <th>Total Refinanciación</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr><td>$ 50.300</td><td>2 cuotas</td><td>$ 20.000</td><td>Anticipo de $ 50.300 + 2 Cuotas de $ 20.000</td><td>$ 90.300</td><td><span class="badge badge-ok" style="cursor: pointer;">Refinanciación</span></td></tr>
+                                            <tr><td>$ 50.300</td><td>3 cuotas</td><td>$ 13.300</td><td>Anticipo de $ 50.300 + 3 Cuotas de $ 13.300</td><td>$ 92.300</td><td><span class="badge badge-ok" style="cursor: pointer;">Refinanciación</span></td></tr>
+                                            <tr><td>$ 50.300</td><td>4 cuotas</td><td>$ 10.000</td><td>Anticipo de $ 50.300 + 4 Cuotas de $ 10.000</td><td>$ 94.300</td><td><span class="badge badge-ok" style="cursor: pointer;">Refinanciación</span></td></tr>
+                                            <tr><td>$ 50.300</td><td>5 cuotas</td><td>$ 9.600</td><td>Anticipo de $ 50.300 + 5 Cuotas de $ 9.600</td><td>$ 96.300</td><td><span class="badge badge-ok" style="cursor: pointer;">Refinanciación</span></td></tr>
+                                            <tr><td>$ 50.300</td><td>6 cuotas</td><td>$ 8.300</td><td>Anticipo de $ 50.300 + 6 Cuotas de $ 8.300</td><td>$ 98.300</td><td><span class="badge badge-ok" style="cursor: pointer;">Refinanciación</span></td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- Tab: Historial de Tareas -->
+                    <div id="tab-historialtareas" class="tab-panel">
+                        <div class="accordion">
+                            <div class="acc-item open">
+                                <button class="acc-head">
+                                    <span>Historial de Tareas</span>
+                                    <span>▾</span>
+                                </button>
+                                <div class="acc-body">
+                                    <table style="table-layout: fixed; width: 100%;">
+                                        <colgroup>
+                                            <col style="width: 11.11%" span="9">
+                                        </colgroup>
+                                        <thead>
+                                            <tr>
+                                                <th>Fecha</th>
+                                                <th>Legajo</th>
+                                                <th>Contacto</th>
+                                                <th>Respuesta</th>
+                                                <th>Gestión</th>
+                                                <th>Comentario</th>
+                                                <th>Operador</th>
+                                                <th>Fecha de Promesa</th>
+                                                <th>Monto de Promesa</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>10/04/2026 16:42</td>
+                                                <td>185421</td>
+                                                <td>Si</td>
+                                                <td>Acuerdo - Cancelación</td>
+                                                <td>Llamado</td>
+                                                <td>Cancelación de $ 845.000 al 12/04/2026</td>
+                                                <td>Juan P.</td>
+                                                <td>20/04/2026</td>
+                                                <td>$ 845.000</td>
+                                            </tr>
+                                            <tr>
+                                                <td>08/04/2026 15:58</td>
+                                                <td>185421</td>
+                                                <td>Si</td>
+                                                <td>Contacto sin Promesa</td>
+                                                <td>Email</td>
+                                                <td></td>
+                                                <td>Juan P.</td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td>21/06/2025 09:28</td>
+                                                <td>095487</td>
+                                                <td>No</td>
+                                                <td>Acuerdo - Incumplido</td>
+                                                <td>Llamado</td>
+                                                <td></td>
+                                                <td>Juan P.</td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td>18/06/2025 11:31</td>
+                                                <td>095487</td>
+                                                <td>Si</td>
+                                                <td>Acuerdo - Extensión</td>
+                                                <td>Whatsapp</td>
+                                                <td>Extensión 14 de $ 100.000 al 20/06/2025</td>
+                                                <td>Juan P.</td>
+                                                <td>20/06/2025</td>
+                                                <td>$ 100.000</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tab: Historial de Convenios -->
+                    <div id="tab-historialconvenios" class="tab-panel">
+                        <div class="accordion">
+                            <div class="acc-item open">
+                                <button class="acc-head">
+                                    <span>Historial de Convenios</span>
+                                    <span>▾</span>
+                                </button>
+                                <div class="acc-body">
+                                    <table style="table-layout: fixed; width: 100%;">
+                                        <colgroup>
+                                            <col style="width: 11.11%" span="9">
+                                        </colgroup>
+                                        <thead>
+                                            <tr>
+                                                <th>Fecha</th>
+                                                <th>Legajo</th>
+                                                <th>Contacto</th>
+                                                <th>Respuesta</th>
+                                                <th>Gestión</th>
+                                                <th>Comentario</th>
+                                                <th>Operador</th>
+                                                <th>Fecha de Promesa</th>
+                                                <th>Monto de Promesa</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>10/04/2026 16:42</td>
+                                                <td>185421</td>
+                                                <td>Si</td>
+                                                <td>Acuerdo - Cancelación</td>
+                                                <td>Llamado</td>
+                                                <td>Cancelación de $ 845.000 al 12/04/2026</td>
+                                                <td>Juan P.</td>
+                                                <td>20/04/2026</td>
+                                                <td>$ 845.000</td>
+                                            </tr>
+                                            <tr>
+                                                <td>18/06/2025 11:31</td>
+                                                <td>095487</td>
+                                                <td>Si</td>
+                                                <td>Acuerdo - Extensión</td>
+                                                <td>Whatsapp</td>
+                                                <td>Extensión 14 de $ 100.000 al 20/06/2025</td>
+                                                <td>Juan P.</td>
+                                                <td>20/06/2025</td>
+                                                <td>$ 100.000</td>
+                                            </tr>
+                                            <tr>
+                                                <td>18/06/2025 11:31</td>
+                                                <td>068137</td>
+                                                <td>Si</td>
+                                                <td>Acuerdo - Extensión</td>
+                                                <td>Whatsapp</td>
+                                                <td>Extensión 30 de $ 200.000 al 15/04/2025</td>
+                                                <td>Juan P.</td>
+                                                <td>20/06/2025</td>
+                                                <td>$ 200.000</td>
+                                            </tr>
+                                            <tr>
+                                                <td>18/06/2025 11:31</td>
+                                                <td>068137</td>
+                                                <td>Si</td>
+                                                <td>Acuerdo - Refinanciación</td>
+                                                <td>Whatsapp</td>
+                                                <td>
+                                                    Refinanciación
+                                                    <br>· Número: 74537
+                                                    <br>· Capital: $ 179.175
+                                                    <br>· Anticipo: $ 0
+                                                    <br>· 3 cuotas de $ 59.725
+                                                </td>
+                                                <td>Juan P.</td>
+                                                <td>20/06/2025</td>
+                                                <td>$ 200.000</td>
+                                            </tr>
+                                            <tr>
+                                                <td>18/06/2025 11:31</td>
+                                                <td>025487</td>
+                                                <td>Si</td>
+                                                <td>Acuerdo - Cancelación</td>
+                                                <td>Whatsapp</td>
+                                                <td>Extensión 30 de $ 200.000 al 15/04/2025</td>
+                                                <td>Juan P.</td>
+                                                <td>20/06/2025</td>
+                                                <td>$ 200.000</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tab: Información Adicional -->
+                    <div id="tab-informacionadicional" class="tab-panel">
+
+                        <div class="accordion">
+
+                            <div class="acc-item open">
+                                <button class="acc-head">
+                                    <span>aaaa</span>
+                                    <span>▾</span>
+                                </button>
+                                <div class="acc-body">
+                                    <div class="data-grid">
+                                        <div class="data-item"><div class="k">Card 1</div><div class="v">aaaa</div></div>
+                                        <div class="data-item"><div class="k">Card 2</div><div class="v">bbbb</div></div>
+                                        <div class="data-item"><div class="k">Card 3</div><div class="v">cccc</div></div>
+                                        <div class="data-item"><div class="k">Card 4</div><div class="v">dddd</div></div>
+                                        <div class="data-item"><div class="k">Card 5</div><div class="v">eeee</div></div>
+                                        <div class="data-item"><div class="k">Card 6</div><div class="v">ffff</div></div>
+                                        <div class="data-item"><div class="k">Card 7</div><div class="v">ggggg</div></div>
+                                        <div class="data-item"><div class="k">Card 8</div><div class="v">hhhh</div></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="acc-item open">
+                                <button class="acc-head">
+                                    <span>bbbb</span>
+                                    <span>▾</span>
+                                </button>
+                                <div class="acc-body">
+                                    <table style="table-layout: fixed; width: 100%;">
+                                        <colgroup>
+                                            <col style="width: 25%" span="4">
+                                        </colgroup>
+                                        <thead>
+                                            <tr>
+                                                <th>Columna 1</th>
+                                                <th>Columna 2</th>
+                                                <th>Columna 3</th>
+                                                <th>Columna 4</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>11</td><td>21</td><td>31</td><td>41</td>
+                                            </tr>
+                                            <tr>
+                                                <td>12</td><td>22</td><td>32</td><td>42</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- ── Modal: Resultados de Búsqueda por Filtro ─────────────── -->
+
+    <div id="modal-filtro" class="modal-overlay">
+        <div class="modal">
+            <div class="modal-head">
+                <h2>Resultados de Búsqueda</h2>
+                <button class="modal-close" id="modal-close">✕</button>
+            </div>
+            <div class="modal-body">
+                <div class="acc-item open">
+                    <button class="acc-head">
+                        <span>Búsqueda por Filtro</span>
+                        <span>▾</span>
+                    </button>
+                    <div class="acc-body">
+                        <table style="table-layout: fixed; width: 100%;">
+                            <colgroup>
+                                <col style="width: 10%" span="10">
+                            </colgroup>
+                            <thead>
+                                <tr>
+                                    <th>Cuil</th>
+                                    <th>DNI</th>
+                                    <th>Legajo</th>
+                                    <th>Deudor</th>
+                                    <th>Teléfono</th>
+                                    <th>Email</th>
+                                    <th>Condición</th>
+                                    <th>Estado</th>
+                                    <th>Vencimiento</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>20334445550</td>
+                                    <td>33444555</td>
+                                    <td>123456</td>
+                                    <td>Juan Pérez</td>
+                                    <td>1122334455</td>
+                                    <td>jperez@mail.com</td>
+                                    <td>Activo</td>
+                                    <td>Gestión interna</td>
+                                    <td>15/08/2026</td>
+                                    <td><span class="badge badge-ok" style="cursor: pointer;">Ver</span></td>
+                                </tr>
+                                <tr>
+                                    <td>20334445550</td>
+                                    <td>33444555</td>
+                                    <td>123456</td>
+                                    <td>Juan Pérez</td>
+                                    <td>1122334455</td>
+                                    <td>jperez@mail.com</td>
+                                    <td>Activo</td>
+                                    <td>Gestión interna</td>
+                                    <td>15/08/2026</td>
+                                    <td><span class="badge badge-ok" style="cursor: pointer;">Ver</span></td>
+                                </tr>
+                                <tr>
+                                    <td>20334445550</td>
+                                    <td>33444555</td>
+                                    <td>123456</td>
+                                    <td>Juan Pérez</td>
+                                    <td>1122334455</td>
+                                    <td>jperez@mail.com</td>
+                                    <td>Activo</td>
+                                    <td>Gestión interna</td>
+                                    <td>15/08/2026</td>
+                                    <td><span class="badge badge-ok" style="cursor: pointer;">Ver</span></td>
+                                </tr>
+                                <tr>
+                                    <td>20334445550</td>
+                                    <td>33444555</td>
+                                    <td>123456</td>
+                                    <td>Juan Pérez</td>
+                                    <td>1122334455</td>
+                                    <td>jperez@mail.com</td>
+                                    <td>Activo</td>
+                                    <td>Gestión interna</td>
+                                    <td>15/08/2026</td>
+                                    <td><span class="badge badge-ok" style="cursor: pointer;">Ver</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="toast-container position-fixed start-50 translate-middle-x bottom-0 p-3">
-            <div id="successToast" class="toast fade border-0 text-bg-primary" data-bs-delay="1200"> 
-                <div class="toast-body text-center">¡Gestión guardada!</div>
-            </div>
-        </div>
-        <div class="toast-container position-fixed start-50 translate-middle-x bottom-0 p-3">
-            <div id="warningToast" class="toast fade border-0 text-bg-primary" data-bs-delay="1200"> 
-                <div class="toast-body text-center">¡Sin registros!</div>
-            </div>
-        </div>
-        <footer class="text-center fixed-bottom border-top py-2 bg-light fw-bold text-primary">
-            © 2025 - Mi Aplicación
-        </footer>
+    </div>
 
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
-
-        <script>
-            document.addEventListener('DOMContentLoaded', () => {
-
-                const totalRegistrosSpan = document.getElementById('total-registros');
-                
-                const searchCuilInput = document.getElementById('input-cuil');
-                const searchDetalleInput = document.getElementById('input-detalle');
-
-                const dropdownNivelContainer = document.getElementById('dropdown-nivel-container');
-                const filterNivelDropdown = document.getElementById('filter-nivel');
-                const dropdownButtonNivel = document.getElementById('dropdownNivel');
-
-                const dropdownEstadoContainer = document.getElementById('dropdown-estado-container');
-                const filterEstadoDropdown = document.getElementById('filter-estado');
-                const dropdownButtonEstado = document.getElementById('dropdownEstado');
-
-                const dropdownUsuarioContainer = document.getElementById('dropdown-usuario-container');
-                const filterUsuarioDropdown = document.getElementById('filter-usuario');
-                const dropdownButtonUsuario = document.getElementById('dropdownUsuario');
-
-                const dropdownTipoContainer = document.getElementById('dropdown-tipo-container');
-                const filterTipoDropdown = document.getElementById('filter-tipo');
-                const dropdownButtonTipo = document.getElementById('dropdownTipo'); 
-
-                const tableHeaders = document.querySelectorAll('.table thead th[data-column-index]');
-                const tableBody = document.querySelector('.table-container table tbody');
-                const allRows = Array.from(tableBody.querySelectorAll('tr'));
-
-                const gestionModalEl = document.getElementById('gestionModal');
-                const gestionModal = gestionModalEl ? new bootstrap.Modal(gestionModalEl) : null;
-                const gestionForm = document.getElementById('gestionForm'); 
-                const guardarGestionBtn = document.getElementById('guardarGestionBtn'); 
-
-                const infoClienteTexto = document.getElementById('infoClienteTexto');
-                const tipoDropdownButton = document.getElementById('tipoDropdownButton'); 
-                const tipoSeleccionadoTexto = document.getElementById('tipoSeleccionadoTexto'); 
-                const tipoDropdownMenu = document.getElementById('tipoDropdownMenu'); 
-                const tipoInputHidden = document.getElementById('tipoInputHidden'); 
-                const detalleModal = document.getElementById('detalleModal'); 
-
-                const historialSinGestiones = document.getElementById('historial-sin-gestiones');
-                const historialTableContainer = document.getElementById('historial-table-container');
-                const historialTableBody = document.getElementById('historial-table-body');
-
-                const gestionesHistorial = [
-                    { cuil: '20101425854', gestiones: [
-                        { actualizacion: '16/09/2025 12:33', usuario: 'cliente', tipo: 'Evaluar', detalle: 'Solicitud actualizada' },
-                        { actualizacion: '14/09/2025 17:01', usuario: 'lmendez', tipo: 'Esperando Cliente', detalle: 'Pendiente DNI frente' },
-                        { actualizacion: '14/09/2025 16:42', usuario: 'cliente', tipo: 'Evaluar', detalle: 'Solicitud actualizada' },
-                        { actualizacion: '14/09/2025 16:28', usuario: 'bsalcedo', tipo: 'Esperando Cliente', detalle: 'Pendiente DNI frente' }
-                    ]},
-                    { cuil: '20107106779', gestiones: [
-                        { actualizacion: '16/09/2025 17:01', usuario: 'lmendez', tipo: 'Esperando Equipo Interno', detalle: 'Caso #2254' },
-                        { actualizacion: '16/09/2025 14:48', usuario: 'cliente', tipo: 'Evaluar', detalle: 'Solicitud actualizada' },
-                        { actualizacion: '16/09/2025 14:45', usuario: 'bsalcedo', tipo: 'Esperando RENAPER', detalle: 'Número de trámite' },
-                    ]},
-                    { cuil: '20134559415', gestiones: [
-                        { actualizacion: '15/09/2025 14:32', usuario: 'evargas', tipo: 'Contacto Pendiente', detalle: 'Llamar 16hs' }
-                    ]},
-                    { cuil: '20191586441', gestiones: [
-                        { actualizacion: '16/09/2025 09:52', usuario: 'lmendez', tipo: 'Contacto Pendiente', detalle: 'Sin respuesta' },
-                        { actualizacion: '15/09/2025 17:02', usuario: 'evargas', tipo: 'Contacto Pendiente', detalle: 'Sin respuesta' },
-                        { actualizacion: '15/09/2025 15:47', usuario: 'crojas', tipo: 'Contacto Pendiente', detalle: 'Llamar 17hs' },
-                        { actualizacion: '15/09/2025 14:49', usuario: 'evargas', tipo: 'Esperando Equipo Interno', detalle: 'Caso #2036' },
-                        { actualizacion: '15/09/2025 14:27', usuario: 'bsalcedo', tipo: 'Evaluar', detalle: 'Solicitud actualizada' },
-                        { actualizacion: '15/09/2025 14:24', usuario: 'bsalcedo', tipo: 'Esperando RENAPER', detalle: 'Número de trámite' },
-                        { actualizacion: '14/09/2025 12:06', usuario: 'cliente', tipo: 'Evaluar', detalle: 'Solicitud actualizada' },
-                        { actualizacion: '14/09/2025 09:14', usuario: 'bsalcedo', tipo: 'Esperando Cliente', detalle: 'Pendiente DNI frente' }
-                    ]},
-                    { cuil: '20260540012', gestiones: [
-                        { actualizacion: '14/09/2025 15:59', usuario: 'evargas', tipo: 'Esperando RENAPER', detalle: 'Número de trámite' },
-                        { actualizacion: '14/09/2025 15:23', usuario: 'cliente', tipo: 'Evaluar', detalle: 'Solicitud actualizada' },
-                        { actualizacion: '14/09/2025 14:05', usuario: 'crojas', tipo: 'Esperando Cliente', detalle: 'Pendiente DNI frente' },
-                        { actualizacion: '14/09/2025 13:11', usuario: 'cliente', tipo: 'Evaluar', detalle: 'Solicitud actualizada' },
-                        { actualizacion: '14/09/2025 11:27', usuario: 'evargas', tipo: 'Esperando Cliente', detalle: 'Pendiente DNI frente' }
-                    ]},
-                    { cuil: '20307522114', gestiones: [
-                        { actualizacion: '16/09/2025 09:31', usuario: 'bsalcedo', tipo: 'Esperando Cliente', detalle: 'Pendiente DNI frente' }
-                    ]},
-                    { cuil: '20311463497', gestiones: [
-                        { actualizacion: '16/09/2025 11:43', usuario: 'bsalcedo', tipo: 'Evaluar', detalle: 'Solicitud actualizada' },
-                        { actualizacion: '16/09/2025 11:41', usuario: 'bsalcedo', tipo: 'Esperando RENAPER', detalle: 'Número de trámite' }
-                    ]},
-                    { cuil: '20313577483', gestiones: []},
-                    { cuil: '20326970244', gestiones: [
-                        { actualizacion: '14/09/2025 10:33', usuario: 'crojas', tipo: 'Esperando Cliente', detalle: 'Pendiente DNI dorso' }
-                    ]},
-                    { cuil: '27166391426', gestiones: []},
-                    { cuil: '27167842448', gestiones: [
-                        { actualizacion: '15/09/2025 11:34', usuario: 'crojas', tipo: '	Esperando RENAPER', detalle: 'Biometría facial' },
-                        { actualizacion: '15/09/2025 11:08', usuario: 'cliente', tipo: 'Evaluar', detalle: 'Solicitud actualizada' },
-                        { actualizacion: '15/09/2025 10:22', usuario: 'evargas', tipo: 'Esperando Cliente', detalle: 'Pendiente DNI frente' }
-                    ]},
-                    { cuil: '27178475138', gestiones: []},
-                    { cuil: '27183541582', gestiones: [
-                        { actualizacion: '16/09/2025 09:17', usuario: 'evargas', tipo: 'Esperando Equipo Interno', detalle: 'Caso #2156' },
-                        { actualizacion: '16/09/2025 09:06', usuario: 'bsalcedo', tipo: 'Evaluar', detalle: 'Solicitud actualizada' },
-                        { actualizacion: '16/09/2025 09:03', usuario: 'bsalcedo', tipo: 'Esperando RENAPER', detalle: 'Número de trámite' },
-                        { actualizacion: '15/09/2025 22:14', usuario: 'cliente', tipo: 'Evaluar', detalle: 'Solicitud actualizada' },
-                        { actualizacion: '15/09/2025 17:26', usuario: 'bsalcedo', tipo: 'Esperando Cliente', detalle: 'Pendiente DNI frente' }
-                    ]},
-                    { cuil: '27278085275', gestiones: [
-                        { actualizacion: '14/09/2025 17:27', usuario: 'evargas', tipo: 'Esperando RENAPER', detalle: 'Número de trámite' },
-                        { actualizacion: '14/09/2025 16:59', usuario: 'cliente', tipo: 'Evaluar', detalle: 'Solicitud actualizada' },
-                        { actualizacion: '14/09/2025 11:36', usuario: 'crojas', tipo: 'Esperando Cliente', detalle: 'Pendiente DNI frente' }
-                    ]},
-                    { cuil: '27291463591', gestiones: [
-                        { actualizacion: '16/09/2025 12:45', usuario: 'crojas', tipo: 'Esperando RENAPER', detalle: 'Biometría facial' }
-                    ]},
-                    { cuil: '27296896796', gestiones: [
-                        { actualizacion: '15/09/2025 14:08', usuario: 'cliente', tipo: 'Evaluar', detalle: 'Solicitud actualizada' },
-                        { actualizacion: '15/09/2025 09:21', usuario: 'crojas', tipo: 'Esperando Cliente', detalle: 'Pendiente DNI frente' }
-                    ]}
-                ];
-
-                const successToastEl = document.getElementById('successToast');
-                const successToast = successToastEl ? new bootstrap.Toast(successToastEl) : null;
-                
-                const warningToastEl = document.getElementById('warningToast');
-                const warningToast = warningToastEl ? new bootstrap.Toast(warningToastEl) : null;
-
-                let sortDirection = {};
-                let currentSortColumn = -1;
-
-                function renderTable(rowsToRender) {
-                    tableBody.innerHTML = '';
-                    rowsToRender.forEach(row => tableBody.appendChild(row));
-                }
-
-                function updateTotalRegistros(count) {
-                    if (totalRegistrosSpan) {
-                        const formattedCount = String(count).padStart(3, '0');
-                        totalRegistrosSpan.textContent = formattedCount;
-                    }
-                }
-                
-                function downloadCSV() {
-                    const visibleRows = Array.from(tableBody.querySelectorAll('tr'));
-                    if (visibleRows.length === 0) {
-                        if(warningToast) warningToast.show();
-                        return;
-                    }
-                    const headers = Array.from(document.querySelector('.table-container .table thead')
-                        .querySelectorAll('th:not(:last-child)'))
-                        .map(header => header.textContent.trim());
-                    const csvContent = [];
-                    csvContent.push(headers.join(';')); 
-                    visibleRows.forEach(row => {
-                        const rowData = Array.from(row.cells)
-                            .slice(0, -1) 
-                            .map(cell => {
-                                let text = cell.textContent.trim().replace(/"/g, '""');
-                                if (text.includes(';') || text.includes(',')) {
-                                    text = `"${text}"`;
-                                }
-                                return text;
-                            });
-                        csvContent.push(rowData.join(';'));
-                    });
-                    const csvString = csvContent.join('\n');
-                    const bom = '\ufeff'; 
-                    const blob = new Blob([bom + csvString], { type: 'text/csv;charset=utf-8;' });
-                    const url = URL.createObjectURL(blob);
-                    const link = document.createElement('a');
-                    link.setAttribute('href', url);
-                    const date = new Date().toISOString().slice(0, 10);
-                    link.setAttribute('download', `onboarding_${date}.csv`);
-                    document.body.appendChild(link);
-                    link.click();
-                    document.body.removeChild(link);
-                }
-                window.downloadCSV = downloadCSV;
-
-                function setDropdownWidth(container, dropdownMenu) {
-                    const buttonWidth = container.offsetWidth;
-                    dropdownMenu.style.setProperty('min-width', `${buttonWidth}px`);
-                }
-
-                function populateCheckboxes(dropdownElement, columnIndex, placeholderText) {
-                    const options = new Set();
-                    allRows.forEach(row => {
-                        if (row.cells[columnIndex]) {
-                            const cellText = row.cells[columnIndex].textContent.trim();
-                            options.add(cellText);
-                        }
-                    });
-                    let sortedOptions = Array.from(options).sort((a, b) => a.localeCompare(b));
-                    let priorityWord = '';
-                    if (placeholderText === 'Usuario') {
-                        priorityWord = 'cliente';
-                    } else if (placeholderText === 'Tipo') {
-                        priorityWord = 'Evaluar';
-                    }
-                    if (priorityWord) {
-                        const idx = sortedOptions.findIndex(opt => opt.toLowerCase() === priorityWord.toLowerCase());
-                        if (idx !== -1) {
-                            const [priorityValue] = sortedOptions.splice(idx, 1);
-                            sortedOptions.unshift(priorityValue); 
-                        }
-                    }
-                    dropdownElement.innerHTML = ''; 
-                    const selectAllItem = document.createElement('li');
-                    selectAllItem.innerHTML = `
-                        <label class="dropdown-item form-check-label" style="cursor: pointer;">
-                            <input type="checkbox" class="form-check-input me-2" value="all" id="all-${placeholderText.toLowerCase()}">
-                            Seleccionar todo
-                        </label>
-                    `;
-                    dropdownElement.appendChild(selectAllItem);
-                    sortedOptions.forEach((option) => {
-                        const li = document.createElement('li');
-                        const isPriority = (placeholderText === 'Usuario' && option.toLowerCase() === 'cliente') ||
-                                        (placeholderText === 'Tipo' && option.toLowerCase() === 'evaluar');
-                        const optionValue = option === '' ? 'empty_value' : option;
-                        const optionText = option === '' ? `(Sin ${placeholderText})` : option;
-                        const textColorClass = isPriority ? 'text-muted' : '';
-                        li.innerHTML = `
-                            <label class="dropdown-item form-check-label ${textColorClass}" style="cursor: pointer;">
-                                <input type="checkbox" class="form-check-input me-2" value="${optionValue}">
-                                <span>${optionText}</span>
-                            </label>
-                        `;
-                        dropdownElement.appendChild(li);
-                    });
-                    dropdownElement.addEventListener('click', (e) => {
-                        e.stopPropagation();
-                    });
-                    const selectAllCheckbox = dropdownElement.querySelector(`#all-${placeholderText.toLowerCase()}`);
-                    if (selectAllCheckbox) {
-                        selectAllCheckbox.addEventListener('change', (e) => {
-                            const checked = e.target.checked;
-                            toggleAllCheckboxes(dropdownElement, checked);
-                            applyFilters();
-                            updateDropdownText(
-                                dropdownElement.closest('.dropdown').querySelector('button'), 
-                                placeholderText, 
-                                dropdownElement
-                            );
-                        });
-                    }
-                    dropdownElement.querySelectorAll('input:not([value="all"])').forEach(checkbox => {
-                        checkbox.addEventListener('change', () => {
-                            applyFilters();
-                            updateDropdownText(
-                                dropdownElement.closest('.dropdown').querySelector('button'), 
-                                placeholderText, 
-                                dropdownElement
-                            );
-                        });
-                    });
-                }
-
-                function toggleAllCheckboxes(dropdown, checked) {
-                    const checkboxes = dropdown.querySelectorAll('input[type="checkbox"]');
-                    checkboxes.forEach(cb => {
-                        cb.checked = checked;
-                    });
-                }
-
-                function updateDropdownText(button, placeholderText, dropdown) {
-                    const allCheckboxes = Array.from(dropdown.querySelectorAll('input:not([value="all"])'));
-                    const checkedCheckboxes = allCheckboxes.filter(cb => cb.checked);
-                    if (checkedCheckboxes.length === allCheckboxes.length || checkedCheckboxes.length === 0) {
-                        button.textContent = `Filtrar por ${placeholderText}...`;
-                    } else if (checkedCheckboxes.length === 1) {
-                        const cb = checkedCheckboxes[0];
-                        const label = cb.closest('label');
-                        const span = label.querySelector('span');
-                        const selectedText = span ? span.textContent.trim() : label.textContent.replace(cb.value, '').trim();
-                        button.textContent = selectedText;
-                    } else {
-                        button.textContent = "Varias selecciones";
-                    }
-                }
-
-                function applyFilters() {
-                    const cuilValue = searchCuilInput.value.toLowerCase().trim();
-                    const detalleValue = searchDetalleInput.value.toLowerCase().trim();
-                    const getSelectedValues = (dropdown) =>
-                        Array.from(dropdown.querySelectorAll('input:checked:not([value="all"])')).map(cb => cb.value);
-                    const nivelValues = getSelectedValues(filterNivelDropdown);
-                    const estadoValues = getSelectedValues(filterEstadoDropdown);
-                    const usuarioValues = getSelectedValues(filterUsuarioDropdown);
-                    const tipoValues = getSelectedValues(filterTipoDropdown);
-                    const filteredRows = allRows.filter(row => {
-                        const cuilCell = row.cells[1].textContent.toLowerCase();
-                        const detalleCell = row.cells[10].textContent.toLowerCase();
-                        const nivelCell = row.cells[5].textContent.trim();
-                        const estadoCell = row.cells[6].textContent.trim();
-                        const usuarioCell = row.cells[8].textContent.trim();
-                        const tipoCell = row.cells[9].textContent.trim();
-                        const cuilMatch = cuilValue === '' || cuilCell.includes(cuilValue);
-                        const detalleMatch = detalleValue === '' || detalleCell.includes(detalleValue);
-                        const checkMatch = (cellValue, selectedValues) => {
-                            if (selectedValues.length === 0) return true; 
-                            if (cellValue !== '') return selectedValues.includes(cellValue);
-                            return selectedValues.includes('empty_value');
-                        };
-                        const nivelMatch = checkMatch(nivelCell, nivelValues);
-                        const estadoMatch = checkMatch(estadoCell, estadoValues);
-                        const usuarioMatch = checkMatch(usuarioCell, usuarioValues);
-                        const tipoMatch = checkMatch(tipoCell, tipoValues);
-                        return cuilMatch && detalleMatch && nivelMatch && estadoMatch && usuarioMatch && tipoMatch;
-                    });
-                    renderTable(filteredRows);
-                    updateTotalRegistros(filteredRows.length);
-                    updateSortIcons(-1, 'asc'); 
-                }
-           
-                function parseDate(dateString) {
-                    const parts = dateString.match(/(\d{2})\/(\d{2})\/(\d{4}) (\d{2}):(\d{2}):(\d{2})/);
-                    if (parts) {
-                        const [, day, month, year, hour, minute, second] = parts;
-                        return new Date(`${year}-${month}-${day}T${hour}:${minute}:${second}`);
-                    }
-                    return new Date(NaN);
-                }
-
-                function compareRows(rowA, rowB, columnIndex, direction) {
-                    const cellA = rowA.cells[columnIndex].textContent.trim();
-                    const cellB = rowB.cells[columnIndex].textContent.trim();
-                    let comparison = 0;
-                    const columnTypes = {
-                        0: 'fecha', 
-                        1: 'numero', 
-                        2: 'texto', 
-                        3: 'numero', 
-                        4: 'texto',
-                        5: 'texto', 
-                        6: 'numero', 
-                        7: 'fecha', 
-                        8: 'texto', 
-                        9: 'texto', 
-                        10: 'texto' 
-                    };
-                    const type = columnTypes[columnIndex] || 'texto';
-                    if (type === 'fecha') {
-                        const dateA = parseDate(cellA);
-                        const dateB = parseDate(cellB);
-                        comparison = (!isNaN(dateA) && !isNaN(dateB)) 
-                            ? dateA.getTime() - dateB.getTime() 
-                            : cellA.toLowerCase().localeCompare(cellB.toLowerCase());
-                    } else if (type === 'numero') {
-                        const numA = parseFloat(cellA.replace(/[^0-9.-]+/g, ''));
-                        const numB = parseFloat(cellB.replace(/[^0-9.-]+/g, ''));
-                        comparison = (!isNaN(numA) && !isNaN(numB)) 
-                            ? numA - numB 
-                            : cellA.toLowerCase().localeCompare(cellB.toLowerCase());
-                    } else {
-                        comparison = cellA.toLowerCase().localeCompare(cellB.toLowerCase());
-                    }
-                    return direction === 'asc' ? comparison : comparison * -1;
-                }
-
-                function sortTable(columnIndex) {
-                    const currentRows = Array.from(tableBody.querySelectorAll('tr'));
-                    if (currentSortColumn !== columnIndex) {
-                        sortDirection[columnIndex] = 'asc'; 
-                    } else {
-                        sortDirection[columnIndex] = sortDirection[columnIndex] === 'asc' ? 'desc' : 'asc';
-                    }
-                    currentSortColumn = columnIndex;
-                    const direction = sortDirection[columnIndex];
-                    currentRows.sort((rowA, rowB) => compareRows(rowA, rowB, columnIndex, direction));
-                    renderTable(currentRows);
-                    updateSortIcons(columnIndex, direction);
-                }
-
-                function updateSortIcons(columnIndex, direction) {
-                    tableHeaders.forEach(header => {
-                        const icon = header.querySelector('i');
-                        if (icon) {
-                            icon.classList.remove('bi-chevron-up', 'bi-chevron-down');
-                            icon.classList.add('bi-chevron-expand');
-                        }
-                    });
-                    if (columnIndex !== -1) {
-                        const currentHeader = tableHeaders[columnIndex];
-                        if (currentHeader) {
-                            const currentHeaderIcon = currentHeader.querySelector('i');
-                            if (currentHeaderIcon) {
-                                currentHeaderIcon.classList.remove('bi-chevron-expand');
-                                currentHeaderIcon.classList.add(direction === 'asc' ? 'bi-chevron-up' : 'bi-chevron-down');
-                            }
-                        }
-                    }
-                }
-
-                function validateAndApplyFeedback() {
-                    const tipoValue = tipoInputHidden ? tipoInputHidden.value.trim() : '';
-                    const detalleValue = detalleModal ? detalleModal.value.trim() : '';
-                    let isValid = true;
-                    if (tipoDropdownButton) tipoDropdownButton.classList.remove('is-invalid');
-                    if (detalleModal) detalleModal.classList.remove('is-invalid');
-                    if (tipoValue === '') {
-                        if (tipoDropdownButton) tipoDropdownButton.classList.add('is-invalid');
-                        isValid = false;
-                    }
-                    if (detalleValue === '') {
-                        if (detalleModal) detalleModal.classList.add('is-invalid');
-                        isValid = false;
-                    }
-                    return isValid;
-                }
-
-                function showGestiones(cuil) {
-                    const clienteData = gestionesHistorial.find(c => c.cuil === cuil);
-                    historialTableBody.innerHTML = '';
-                    if (clienteData && clienteData.gestiones && clienteData.gestiones.length > 0) {
-                        historialTableContainer.style.display = 'block';
-                        historialSinGestiones.style.display = 'none';
-                        const parseDateHistorial = (actualizacionString) => {
-                            const [datePart, timePart] = actualizacionString.split(' ');
-                            const [day, month, year] = datePart.split('/').map(Number);
-                            const [hour, minute, second] = timePart.split(':').map(Number);
-                            return new Date(year, month - 1, day, hour, minute, second);
-                        };
-                        const sortedGestiones = clienteData.gestiones.sort((a, b) => {
-                            const aDate = parseDateHistorial(a.actualizacion);
-                            const bDate = parseDateHistorial(b.actualizacion);
-                            return bDate - aDate;
-                        });
-                        const ultimasGestiones = sortedGestiones.slice(0, 5);
-                        ultimasGestiones.forEach(gestion => {
-                            const row = document.createElement('tr');
-                            row.innerHTML = `
-                                <td>${gestion.actualizacion}</td>
-                                <td>${gestion.usuario}</td>
-                                <td>${gestion.tipo}</td>
-                                <td>${gestion.detalle}</td>
-                            `;
-                            historialTableBody.appendChild(row);
-                        });
-                    } else {
-                        historialTableContainer.style.display = 'none';
-                        historialSinGestiones.style.display = 'block';
-                    }
-                }
-
-                function toggleGuardarButton() {
-                    const tipoValue = tipoInputHidden ? tipoInputHidden.value.trim() : '';
-                    const detalleValue = detalleModal ? detalleModal.value.trim() : '';
-                    const isComplete = tipoValue !== '' && detalleValue !== '';
-                    if (guardarGestionBtn) {
-                        guardarGestionBtn.disabled = !isComplete;
-                        if (isComplete) {
-                            guardarGestionBtn.classList.remove('btn-secondary');
-                            guardarGestionBtn.classList.add('btn-primary');
-                        } else {
-                            guardarGestionBtn.classList.remove('btn-primary');
-                            guardarGestionBtn.classList.add('btn-secondary');
-                        }
-                    }
-                }
-
-                updateTotalRegistros(allRows.length);
-                
-                if(dropdownNivelContainer) setDropdownWidth(dropdownNivelContainer, filterNivelDropdown);
-                if(dropdownEstadoContainer) setDropdownWidth(dropdownEstadoContainer, filterEstadoDropdown);
-                if(dropdownUsuarioContainer) setDropdownWidth(dropdownUsuarioContainer, filterUsuarioDropdown);
-                if(dropdownTipoContainer) setDropdownWidth(dropdownTipoContainer, filterTipoDropdown);
-                populateCheckboxes(filterNivelDropdown, 5, 'Nivel');
-                populateCheckboxes(filterEstadoDropdown, 6, 'Estado');
-                populateCheckboxes(filterUsuarioDropdown, 8, 'Usuario');
-                populateCheckboxes(filterTipoDropdown, 9, 'Tipo');
-
-                if (searchCuilInput) {
-                    searchCuilInput.addEventListener('input', applyFilters);
-                }
-                if (searchDetalleInput) {
-                    searchDetalleInput.addEventListener('input', applyFilters);
-                }
-
-                tableHeaders.forEach((header) => {
-                    const columnIndex = parseInt(header.getAttribute('data-column-index'));
-                    if (!isNaN(columnIndex)) {
-                        header.style.cursor = 'pointer';
-                        header.addEventListener('click', () => sortTable(columnIndex));
-                    }
-                });
-                
-                if(gestionModalEl) {
-                    gestionModalEl.addEventListener('show.bs.modal', function (event) {
-                        const row = event.relatedTarget.closest('tr');
-                        if (!row) return;
-                        const cuil = row.cells[1].textContent.trim();
-                        const nombre = row.cells[2].textContent.trim();
-                        if (infoClienteTexto) infoClienteTexto.textContent = `${cuil} | ${nombre}`;
-                        this.setAttribute('data-current-cuil', cuil); 
-                        if(cuil) {
-                            showGestiones(cuil); 
-                        }
-                        if(gestionForm) gestionForm.reset(); 
-                        if (tipoSeleccionadoTexto) {
-                            tipoSeleccionadoTexto.textContent = 'Seleccionar Tipo...'; 
-                        }
-                        if (tipoDropdownButton) { 
-                            tipoDropdownButton.classList.add('text-muted');
-                            tipoDropdownButton.classList.remove('is-invalid'); 
-                        }
-                        if (tipoInputHidden) {
-                            tipoInputHidden.value = '';
-                        }
-                        if (detalleModal) {
-                            detalleModal.classList.remove('is-invalid'); 
-                        }
-                        toggleGuardarButton(); 
-                    });
-                }
-
-                if (tipoDropdownButton && tipoSeleccionadoTexto && tipoDropdownMenu && tipoInputHidden) {
-                    tipoDropdownMenu.addEventListener('click', function(e) {
-                        const targetLink = e.target.closest('A.dropdown-item'); 
-                        if (targetLink) {
-                            e.preventDefault(); 
-                            const selectedValue = targetLink.textContent.trim();
-                            const selectedText = selectedValue; 
-                            if (tipoSeleccionadoTexto) {
-                                tipoSeleccionadoTexto.textContent = selectedText;
-                            }
-                            tipoInputHidden.value = selectedValue;
-                            tipoDropdownButton.classList.remove('text-muted');
-                            tipoDropdownButton.classList.remove('is-invalid'); 
-                            toggleGuardarButton(); 
-                        }
-                    });
-                }
-
-                if (detalleModal) {
-                    detalleModal.addEventListener('input', () => {
-                        toggleGuardarButton();
-                        
-                        if (detalleModal.value.trim() !== '') {
-                            detalleModal.classList.remove('is-invalid');
-                        }
-                    });
-                }
-
-                if(guardarGestionBtn && gestionModal) {
-                    guardarGestionBtn.addEventListener('click', () => {
-                        if (validateAndApplyFeedback()) {
-                            gestionModal.hide();
-                            if (successToast) {
-                                successToast.show(); 
-                            }
-                        } 
-                    });
-                }
+    <script>
+        /* ── Tabs ── */
+        document.querySelectorAll('.tab').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+                btn.classList.add('active');
+                document.getElementById(btn.dataset.tab).classList.add('active');
             });
-        </script>
-    </body>
+        });
+
+        /* ── Acordeones ── */
+        document.querySelectorAll('.acc-head').forEach(head => {
+            head.addEventListener('click', () => {
+                const item = head.closest('.acc-item');
+                item.classList.toggle('open');
+                const arrow = head.querySelector('span:last-child');
+                arrow.textContent = item.classList.contains('open') ? '▾' : '▸';
+            });
+        });
+
+        /* ── Modal: Búsqueda por Filtro ── */
+        const modalOverlay = document.getElementById('modal-filtro');
+
+        document.getElementById('btn-buscar-filtro').addEventListener('click', () => {
+            modalOverlay.classList.add('active');
+        });
+
+        document.getElementById('modal-close').addEventListener('click', () => {
+            modalOverlay.classList.remove('active');
+        });
+
+        modalOverlay.addEventListener('click', (e) => {
+            if (e.target === modalOverlay) {
+                modalOverlay.classList.remove('active');
+            }
+        });
+    </script>
+
+</body>
+
 </html>
